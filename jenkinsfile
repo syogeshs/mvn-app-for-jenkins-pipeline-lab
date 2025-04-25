@@ -1,0 +1,16 @@
+pipeline{
+    agent 'maven-build-server'
+
+    tools{
+        jdk 'java-17'
+        maven 'maven-3.9.8'
+    }
+
+    stages{
+        stage('Clean and build the application'){
+            steps{
+                sh 'mvn clean build'
+            }
+        }
+    }
+}
