@@ -17,9 +17,6 @@ pipeline{
             }
         }
         stage('Code Review Using SonarQube'){
-            environment{
-                scannerHome = tool 'sonar-scanner'
-            }
             steps{
                 // Env value must match with the sonar server name in the SYSTEMS section
                 withSonarQubeEnv('sonarqube-server'){
