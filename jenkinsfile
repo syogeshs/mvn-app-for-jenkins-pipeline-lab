@@ -11,9 +11,17 @@ pipeline{
     }
 
     stages{
-        stage('Clean and build the application'){
+        stage('Clean and validate the application'){
             steps{
-                sh 'mvn package'
+                sh 'mvn clean validate'
+            }
+        }
+        stage('Code Review Using SonarQube'){
+            steps{
+                // Env value must match with the sonar server name in the SYSTEMS section
+                withSonarQubeEnv('sonarqube-server'){
+                    sh 'mvn sonar:sonar -Dsonar.projectkey=ys-mvn-org_ysapp-project -Dsonar.organization=ys-mvn-org -Dsonar.projectName=ysapp-project -Dsonar.host.url=https://sonarcloud.io/ -Dsonar.token=25e349500db7175bf412295a6b5bcbc7ca5d7565'
+                }
             }
         }
     }
