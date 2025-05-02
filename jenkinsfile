@@ -13,10 +13,13 @@ pipeline{
     stages{
         stage('Clean and validate the application'){
             steps{
-                sh 'mvn clean validate'
+                sh 'mvn package'
             }
         }
         stage('Code Review Using SonarQube'){
+            environment{
+                scannerHome = tool 'sonar-scanner'
+            }
             steps{
                 // Env value must match with the sonar server name in the SYSTEMS section
                 withSonarQubeEnv('sonarqube-server'){
